@@ -1,0 +1,20 @@
+﻿using System.Text.Json.Serialization;
+
+namespace WorkerTrackingServer.Domain.Workers;
+public sealed class WorkerLogin
+{
+    public object WorkerInfo => new
+    {
+        WorkerId,
+        WorkerFullName = Worker.FullName,
+        WorkerDepartment = Worker.DepartmentInfo
+    };
+
+    [JsonIgnore]
+    public Guid WorkerId { get; set; }
+    [JsonIgnore]
+    public Worker Worker { get; set; } = default!;
+
+    public DateTime LoginTime { get; set; }
+    public DateTime? LogoutTime { get; set; }
+}
