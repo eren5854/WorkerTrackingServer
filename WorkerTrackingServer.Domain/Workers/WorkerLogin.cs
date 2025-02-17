@@ -1,7 +1,8 @@
 ﻿using System.Text.Json.Serialization;
+using WorkerTrackingServer.Domain.Abstract;
 
 namespace WorkerTrackingServer.Domain.Workers;
-public sealed class WorkerLogin
+public sealed class WorkerLogin : Entity
 {
     public object WorkerInfo => new
     {

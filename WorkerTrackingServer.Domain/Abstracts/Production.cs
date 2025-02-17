@@ -3,7 +3,7 @@
 namespace WorkerTrackingServer.Domain.Abstracts;
 public class Production : Entity
 {
-    public int? DailyTarger { get; set; }
+    public int? DailyTarget { get; set; }
     public int? WeeklyTarget { get; set; }
     public int? MonthlyTarget { get; set; }
     public int? YearlyTarget { get; set; }

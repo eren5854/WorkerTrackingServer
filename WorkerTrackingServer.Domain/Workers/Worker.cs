@@ -17,7 +17,8 @@ public sealed class Worker : Entity
     public object DepartmentInfo => new
     {
         DepartmentId = DepartmentId,
-        DepartmentName = Department?.DepartmentName
+        DepartmentName = Department?.DepartmentName,
+        DepartmentDescription = Department?.DepartmentDescription
     };
 
     [JsonIgnore]
