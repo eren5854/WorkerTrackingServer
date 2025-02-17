@@ -1,7 +1,11 @@
 ﻿using WorkerTrackingServer.Domain.Abstract;
+using WorkerTrackingServer.Domain.Workers;
 
 namespace WorkerTrackingServer.Domain.Departments;
-public class Department : Entity
+public sealed class Department : Entity
 {
     public string DepartmentName { get; set; } = string.Empty;
+    public string? DepartmentDescription { get; set; }
+
+    public List<Worker>? Workers { get; set; }
 }
