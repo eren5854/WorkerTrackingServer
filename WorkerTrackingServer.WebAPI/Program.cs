@@ -1,12 +1,14 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
+using WorkerTrackingServer.Application;
 using WorkerTrackingServer.Infrastructure;
+using WorkerTrackingServer.WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors();
 
-//builder.Services.AddApplication();
+builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddControllers();
@@ -48,6 +50,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors();
+
+ExtensionsMiddleware.CreateAdmin(app);
 
 app.UseHttpsRedirection();
 

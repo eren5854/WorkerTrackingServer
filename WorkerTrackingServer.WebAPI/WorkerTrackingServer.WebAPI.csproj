@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\WorkerTrackingServer.Application\WorkerTrackingServer.Application.csproj" />
     <ProjectReference Include="..\WorkerTrackingServer.Infrastructure\WorkerTrackingServer.Infrastructure.csproj" />
   </ItemGroup>

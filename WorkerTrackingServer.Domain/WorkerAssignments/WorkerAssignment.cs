@@ -3,7 +3,7 @@ using WorkerTrackingServer.Domain.Machines;
 using WorkerTrackingServer.Domain.Products;
 using WorkerTrackingServer.Domain.Workers;
 
-namespace WorkerTrackingServer.Domain.WorkerAssignment;
+namespace WorkerTrackingServer.Domain.WorkerAssignments;
 public sealed class WorkerAssignment : Entity
 {
     public Guid? WorkerId { get; set; }

@@ -42,6 +42,7 @@ public static class DependencyInjection
         services.AddAuthorizationBuilder();
 
         services.AddScoped<JwtProvider>();
+        services.AddScoped<GenerateCode>();
 
 
         services.Scan(action =>

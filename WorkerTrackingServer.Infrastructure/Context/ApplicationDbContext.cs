@@ -6,7 +6,7 @@ using WorkerTrackingServer.Domain.Departments;
 using WorkerTrackingServer.Domain.Machines;
 using WorkerTrackingServer.Domain.Products;
 using WorkerTrackingServer.Domain.Users;
-using WorkerTrackingServer.Domain.WorkerAssignment;
+using WorkerTrackingServer.Domain.WorkerAssignments;
 using WorkerTrackingServer.Domain.Workers;
 
 namespace WorkerTrackingServer.Infrastructure.Context;
