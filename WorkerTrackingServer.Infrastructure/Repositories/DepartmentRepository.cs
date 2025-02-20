@@ -1,4 +1,5 @@
 ﻿using ED.GenericRepository;
+using Microsoft.EntityFrameworkCore;
 using WorkerTrackingServer.Domain.Departments;
 using WorkerTrackingServer.Domain.Repositories;
 using WorkerTrackingServer.Infrastructure.Context;

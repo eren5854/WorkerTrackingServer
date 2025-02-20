@@ -2,4 +2,5 @@
 public interface IGenerateCode
 {
     public int Generate6DigitCode(CancellationToken cancellationToken);
+    public string GenerateWorkerCode(CancellationToken cancellationToken);
 }

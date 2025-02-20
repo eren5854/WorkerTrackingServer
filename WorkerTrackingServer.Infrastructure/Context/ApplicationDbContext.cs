@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WorkerTrackingServer.Domain.Departments;
+using WorkerTrackingServer.Domain.EmailSettings;
 using WorkerTrackingServer.Domain.Machines;
 using WorkerTrackingServer.Domain.Products;
 using WorkerTrackingServer.Domain.Users;
@@ -24,6 +25,7 @@ public sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRo
     public DbSet<Worker> Workers { get; set; }
     public DbSet<WorkerLogin> WorkerLogins { get; set; }
     public DbSet<WorkerProduction> WorkerProductions { get; set; }
+    public DbSet<EmailSetting> EmailSettings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

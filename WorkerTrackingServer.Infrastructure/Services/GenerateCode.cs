@@ -10,4 +10,11 @@ internal class GenerateCode : IGenerateCode
         int code = random.Next(100000, 999999);
         return code;
     }
+
+    public string GenerateWorkerCode(CancellationToken cancellationToken)
+    {
+        Random random = new();
+        string code = random.Next(100000, 999999).ToString();
+        return code;
+    }
 }

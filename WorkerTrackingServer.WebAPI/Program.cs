@@ -52,6 +52,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors();
 
 ExtensionsMiddleware.CreateAdmin(app);
+ExtensionsMiddleware.CreateMasterAdmin(app);
 
 app.UseHttpsRedirection();
 

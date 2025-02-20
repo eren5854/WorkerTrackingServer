@@ -14,15 +14,15 @@ public sealed class Worker : Entity
     public DateOnly DateOfBirth { get; set; }
     public GenderSmartEnum Gender { get; set; } = GenderSmartEnum.Other;
 
-    public object DepartmentInfo => new
-    {
-        DepartmentId = DepartmentId,
-        DepartmentName = Department?.DepartmentName,
-        DepartmentDescription = Department?.DepartmentDescription
-    };
+    //public object DepartmentInfo => new
+    //{
+    //    DepartmentId = DepartmentId,
+    //    DepartmentName = Department?.DepartmentName,
+    //    DepartmentDescription = Department?.DepartmentDescription
+    //};
 
-    [JsonIgnore]
-    public Guid? DepartmentId { get; set; }
-    [JsonIgnore]
-    public Department? Department { get; set; }
+    //[JsonIgnore]
+    //public Guid? DepartmentId { get; set; }
+    //[JsonIgnore]
+    //public Department? Department { get; set; }
 }

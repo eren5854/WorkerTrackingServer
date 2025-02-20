@@ -9,6 +9,11 @@ public sealed class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
     public void Configure(EntityTypeBuilder<AppUser> builder)
     {
         builder
+           .Property(p => p.Gender)
+           .HasConversion(p => p.Value,
+           v => GenderSmartEnum.FromValue(v));
+
+        builder
             .Property(p => p.FirstName)
             .HasColumnType("varchar(150)")
             .HasMaxLength(150)
@@ -16,6 +21,12 @@ public sealed class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
 
         builder
             .Property(p => p.LastName)
+            .HasColumnType("varchar(250)")
+            .HasMaxLength(250)
+            .IsRequired();
+
+        builder
+            .Property(p => p.UserName)
             .HasColumnType("varchar(250)")
             .HasMaxLength(250)
             .IsRequired();
