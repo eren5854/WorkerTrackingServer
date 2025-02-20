@@ -9,7 +9,7 @@ public sealed class Machine : Entity
     public string? MachineSerialNumber { get; set; }
     public string? MachineType { get; set; }
     public string? MachineLocation { get; set; }
-    public string? MachineStatus { get; set; }
+    public bool? MachineStatus { get; set; }
     public int MachineNumber { get; set; }
     public string? MachineDescription { get; set; }
 }

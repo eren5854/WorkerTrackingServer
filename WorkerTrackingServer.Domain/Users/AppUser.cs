@@ -35,7 +35,8 @@ public sealed class AppUser : IdentityUser<Guid>
     public int? ForgotPasswordCode { get; set; }
     public DateTime? ForgotPasswordCodeSendDate { get; set; }
 
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; set; } = false;
+    public bool IsActive { get; set; } = true;
     public string CreatedBy { get; set; } = string.Empty;
     public DateTime CreatedDate { get; set; }
     public string? UpdatedBy { get; set; }

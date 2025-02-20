@@ -1,15 +1,20 @@
-﻿using ED.Result;
+﻿using ED.GenericRepository;
+using ED.Result;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WorkerTrackingServer.Application.Services;
+using WorkerTrackingServer.Domain.Repositories;
 using WorkerTrackingServer.Domain.Users;
+using WorkerTrackingServer.Domain.Workers;
 
 namespace WorkerTrackingServer.Application.Features.Auth.Login;
 internal sealed class LoginCommandHandler(
     UserManager<AppUser> userManager,
     SignInManager<AppUser> signInManager,
-    IJwtProvider jwtProvider) : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
+    IJwtProvider jwtProvider,
+    IWorkerLoginRepository workerLoginRepository,
+    IUnitOfWork unitOfWork) : IRequestHandler<LoginCommand, Result<LoginCommandResponse>>
 {
     public async Task<Result<LoginCommandResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
@@ -45,6 +50,20 @@ internal sealed class LoginCommandHandler(
         if (!signInResult.Succeeded)
         {
             return Result<LoginCommandResponse>.Failure("Password is incorrect");
+        }
+
+        if (appUser.Role == 3)
+        {
+            WorkerLogin workerLogin = new()
+            {
+                AppUserId = appUser.Id,
+                LoginTime = DateTime.Now,
+                CreatedDate = DateTime.Now,
+                CreatedBy = appUser.FullName
+            };
+
+            await workerLoginRepository.AddAsync(workerLogin,cancellationToken);
+            await unitOfWork.SaveChangesAsync(cancellationToken);
         }
 
         var loginResponse = await jwtProvider.CreateToken(appUser);
