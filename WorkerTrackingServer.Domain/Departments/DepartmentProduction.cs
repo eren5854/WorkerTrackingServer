@@ -5,16 +5,17 @@ using WorkerTrackingServer.Domain.Products;
 namespace WorkerTrackingServer.Domain.Departments;
 public sealed class DepartmentProduction : Production
 {
+    public object DepartmentInfo => new
+    {
+        DepartmentId = Department.Id,
+        DepartmentName = Department.DepartmentName,
+        DepartmentDescription = Department.DepartmentDescription,
+    };
+
     [JsonIgnore]
     public Guid DepartmentId { get; set; } = default!;
     [JsonIgnore]
     public Department Department { get; set; } = default!;
-
-    public object? DepartmentInfo => new
-    {
-        DepartmentId = Department.Id,
-        DepartmentName = Department.DepartmentName
-    };
 
     [JsonIgnore]
     public Guid ProductId { get; set; } = default!;

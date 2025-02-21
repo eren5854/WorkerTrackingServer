@@ -10,7 +10,7 @@ internal sealed class GetAllDepartmentProductionQueryHandler(
 {
     public async Task<Result<List<DepartmentProduction>>> Handle(GetAllDepartmentProductionQuery request, CancellationToken cancellationToken)
     {
-        List<DepartmentProduction> departmentProductions = await departmentProductionRepository.GetAll().OrderBy(o => o.CreatedDate).ToListAsync(cancellationToken);
+        List<DepartmentProduction> departmentProductions = await departmentProductionRepository.GetAll().Include(i => i.Department).Include(i => i.Product).OrderBy(o => o.CreatedDate).ToListAsync(cancellationToken);
 
         return Result<List<DepartmentProduction>>.Succeed(departmentProductions);
     }

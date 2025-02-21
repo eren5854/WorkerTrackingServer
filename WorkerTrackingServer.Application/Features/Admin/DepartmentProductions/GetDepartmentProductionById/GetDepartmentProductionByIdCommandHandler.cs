@@ -1,5 +1,6 @@
 ﻿using ED.Result;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using WorkerTrackingServer.Domain.Departments;
 using WorkerTrackingServer.Domain.Repositories;
 
@@ -9,7 +10,7 @@ internal sealed class GetDepartmentProductionByIdCommandHandler(
 {
     public async Task<Result<DepartmentProduction>> Handle(GetDepartmentProductionByIdCommand request, CancellationToken cancellationToken)
     {
-        DepartmentProduction departmentProduction = await departmentProductionRepository.GetByExpressionAsync(g => g.Id == request.Id, cancellationToken);
+        DepartmentProduction? departmentProduction = await departmentProductionRepository.Where(g => g.Id == request.Id).Include(i => i.Department).Include(i => i.Product).FirstOrDefaultAsync(cancellationToken);
         if (departmentProduction is null)
         {
             return Result<DepartmentProduction>.Failure("Department production not found");
