@@ -8,8 +8,8 @@ public sealed class WorkerLogin : Entity
     public object WorkerInfo => new
     {
         AppUserId,
-        WorkerFullName = AppUser.FullName,
-        WorkerDepartment = AppUser.DepartmentInfo
+        FullName = AppUser.FullName,
+        Department = AppUser.Department?.DepartmentName
     };
 
     //[JsonIgnore]

@@ -10,10 +10,11 @@ public sealed class WorkerAssignment : Entity
     //public Guid? WorkerId { get; set; }
     //public Worker? Worker { get; set; }
 
-    public object? UserInfo => new
+    public object UserInfo => new
     {
         AppUserId = AppUserId,
         FullName = AppUser.FullName,
+        IsActive = AppUser.IsActive,
     };
 
     [JsonIgnore]
