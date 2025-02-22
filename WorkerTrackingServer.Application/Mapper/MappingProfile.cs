@@ -9,6 +9,8 @@ using WorkerTrackingServer.Application.Features.Admin.Machines.CreateMachine;
 using WorkerTrackingServer.Application.Features.Admin.Machines.UpdateMachine;
 using WorkerTrackingServer.Application.Features.Admin.Products.CreateProduct;
 using WorkerTrackingServer.Application.Features.Admin.Products.UpdateProduct;
+using WorkerTrackingServer.Application.Features.Admin.WorkerAssignments.CreateWorkerAssignment;
+using WorkerTrackingServer.Application.Features.Admin.WorkerAssignments.UpdateWorkerAssignment;
 using WorkerTrackingServer.Application.Features.Admin.WorkerProductions.CreateWorkerProduction;
 using WorkerTrackingServer.Application.Features.Admin.WorkerProductions.UpdateWorkerProduction;
 using WorkerTrackingServer.Application.Features.Admin.Workers.UpdateWorker;
@@ -19,6 +21,7 @@ using WorkerTrackingServer.Domain.EmailSettings;
 using WorkerTrackingServer.Domain.Machines;
 using WorkerTrackingServer.Domain.Products;
 using WorkerTrackingServer.Domain.Users;
+using WorkerTrackingServer.Domain.WorkerAssignments;
 using WorkerTrackingServer.Domain.Workers;
 
 namespace WorkerTrackingServer.Application.Mapper;
@@ -47,5 +50,8 @@ public sealed class MappingProfile : Profile
 
         CreateMap<CreateWorkerProductionCommand, WorkerProduction>();
         CreateMap<UpdateWorkerProductionCommand, WorkerProduction>();
+
+        CreateMap<CreateWorkerAssignmentCommand, WorkerAssignment>();
+        CreateMap<UpdateWorkerAssignmentCommand, WorkerAssignment>();
     }
 }
