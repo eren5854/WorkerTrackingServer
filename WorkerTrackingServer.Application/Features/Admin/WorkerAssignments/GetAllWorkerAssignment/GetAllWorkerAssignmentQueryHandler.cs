@@ -10,7 +10,7 @@ internal sealed class GetAllWorkerAssignmentQueryHandler(
 {
     public async Task<Result<List<WorkerAssignment>>> Handle(GetAllWorkerAssignmentQuery request, CancellationToken cancellationToken)
     {
-        List<WorkerAssignment> workerAssignments = await workerAssignmentRepository.GetAll().OrderByDescending(o => o.CreatedDate).ToListAsync(cancellationToken);
+        List<WorkerAssignment> workerAssignments = await workerAssignmentRepository.GetAll().Include(i => i.AppUser).Include(i => i.Machine).Include(i => i.Product).OrderByDescending(o => o.CreatedDate).ToListAsync(cancellationToken);
         return Result<List<WorkerAssignment>>.Succeed(workerAssignments);
     }
 }

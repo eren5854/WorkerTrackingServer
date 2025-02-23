@@ -8,6 +8,7 @@ using WorkerTrackingServer.Domain.Machines;
 using WorkerTrackingServer.Domain.Products;
 using WorkerTrackingServer.Domain.Users;
 using WorkerTrackingServer.Domain.WorkerAssignments;
+using WorkerTrackingServer.Domain.WorkerProductions;
 using WorkerTrackingServer.Domain.Workers;
 
 namespace WorkerTrackingServer.Infrastructure.Context;
@@ -25,6 +26,10 @@ public sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRo
     public DbSet<Worker> Workers { get; set; }
     public DbSet<WorkerLogin> WorkerLogins { get; set; }
     public DbSet<WorkerProduction> WorkerProductions { get; set; }
+    public DbSet<WorkerDailyProduction> WorkerDailyProductions { get; set; }
+    public DbSet<WorkerWeeklyProduction> WorkerWeeklyProductions { get; set; }
+    public DbSet<WorkerMonthlyProduction> WorkerMonthlyProductions { get; set; }
+    public DbSet<WorkerYearlyProduction> WorkerYearlyProductions { get; set; }
     public DbSet<EmailSetting> EmailSettings { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)

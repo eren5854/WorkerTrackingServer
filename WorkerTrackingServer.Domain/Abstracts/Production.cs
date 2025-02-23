@@ -13,8 +13,8 @@ public class Production : Entity
     public int? MonthlyActual { get; set; }
     public int? YearlyActual { get; set; }
 
-    public int? DailyYield { get; set; }
-    public int? WeeklyYield { get; set; }
-    public int? MonthlyYield { get; set; }
-    public int? YearlyYield { get; set; }
+    public double? DailyYield { get; set; }
+    public double? WeeklyYield { get; set; }
+    public double? MonthlyYield { get; set; }
+    public double? YearlyYield { get; set; }
 }

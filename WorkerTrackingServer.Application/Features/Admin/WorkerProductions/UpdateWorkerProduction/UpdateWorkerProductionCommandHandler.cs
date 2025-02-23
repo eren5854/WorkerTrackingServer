@@ -3,7 +3,7 @@ using ED.GenericRepository;
 using ED.Result;
 using MediatR;
 using WorkerTrackingServer.Domain.Repositories;
-using WorkerTrackingServer.Domain.Workers;
+using WorkerTrackingServer.Domain.WorkerProductions;
 
 namespace WorkerTrackingServer.Application.Features.Admin.WorkerProductions.UpdateWorkerProduction;
 internal sealed class UpdateWorkerProductionCommandHandler(
@@ -13,7 +13,7 @@ internal sealed class UpdateWorkerProductionCommandHandler(
 {
     public async Task<Result<string>> Handle(UpdateWorkerProductionCommand request, CancellationToken cancellationToken)
     {
-        bool isAppUserIdAndProductIdExists = await workerProductionRepository.AnyAsync(a => a.AppUserId == request.AppUserId && a.ProductId == request.ProductId, cancellationToken);
+        bool isAppUserIdAndProductIdExists = await workerProductionRepository.AnyAsync(a => a.Id != request.Id && a.AppUserId == request.AppUserId && a.ProductId == request.ProductId, cancellationToken);
 
         if (isAppUserIdAndProductIdExists)
         {

@@ -10,7 +10,7 @@ internal sealed class GetAllWorkerQueryHandler(
 {
     public async Task<Result<List<AppUser>>> Handle(GetAllWorkerQuery request, CancellationToken cancellationToken)
     {
-        List<AppUser> appUsers = await appUserRepository.GetAll().Where(w => w.Role == 3).OrderBy(o => o.CreatedDate).ToListAsync(cancellationToken);
+        List<AppUser> appUsers = await appUserRepository.GetAll().Where(w => w.Role == 3).OrderBy(o => o.CreatedDate).Include(i => i.Department).ToListAsync(cancellationToken);
         return Result<List<AppUser>>.Succeed(appUsers);
     }
 }

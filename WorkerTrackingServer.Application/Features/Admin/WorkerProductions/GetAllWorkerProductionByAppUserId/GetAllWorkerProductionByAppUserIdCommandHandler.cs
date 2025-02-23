@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using WorkerTrackingServer.Domain.Repositories;
-using WorkerTrackingServer.Domain.Workers;
+using WorkerTrackingServer.Domain.WorkerProductions;
 
 namespace WorkerTrackingServer.Application.Features.Admin.WorkerProductions.GetAllWorkerProductionByAppUserId;
 internal sealed class GetAllWorkerProductionByAppUserIdCommandHandler(
@@ -10,7 +10,7 @@ internal sealed class GetAllWorkerProductionByAppUserIdCommandHandler(
 {
     public async Task<Result<List<WorkerProduction>>> Handle(GetAllWorkerProductionByAppUserIdCommand request, CancellationToken cancellationToken)
     {
-        List<WorkerProduction> workerProductions = await workerProductionRepository.GetAll().Where(w => w.AppUserId == request.AppUserId).ToListAsync(cancellationToken);
+        List<WorkerProduction> workerProductions = await workerProductionRepository.GetAll().Where(w => w.AppUserId == request.AppUserId).Include(i => i.AppUser).Include(i => i.Product).ToListAsync(cancellationToken);
 
         return Result<List<WorkerProduction>>.Succeed(workerProductions);
     }

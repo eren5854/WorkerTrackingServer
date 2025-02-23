@@ -1,5 +1,6 @@
 ﻿using ED.Result;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using WorkerTrackingServer.Domain.Repositories;
 using WorkerTrackingServer.Domain.Users;
 
@@ -9,7 +10,7 @@ internal sealed class GetWorkerByIdCommandHandler(
 {
     public async Task<Result<AppUser>> Handle(GetWorkerByIdCommand request, CancellationToken cancellationToken)
     {
-        AppUser appUser = await appUserRepository.GetByExpressionAsync(g => g.Id == request.Id, cancellationToken);
+        AppUser? appUser = await appUserRepository.Where(w => w.Id == request.Id).Include(i => i.Department).FirstOrDefaultAsync(cancellationToken);
         if (appUser is null)
         {
             return Result<AppUser>.Failure("Worker not found");

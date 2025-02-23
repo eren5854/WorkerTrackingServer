@@ -4,9 +4,9 @@ using WorkerTrackingServer.Domain.WorkerProductions;
 using WorkerTrackingServer.Infrastructure.Context;
 
 namespace WorkerTrackingServer.Infrastructure.Repositories;
-public sealed class WorkerProductionRepository : Repository<WorkerProduction, ApplicationDbContext>, IWorkerProductionRepository
+public sealed class WorkerDailyProductionRepository : Repository<WorkerDailyProduction, ApplicationDbContext>, IWorkerDailyProductionRepository
 {
-    public WorkerProductionRepository(ApplicationDbContext context) : base(context)
+    public WorkerDailyProductionRepository(ApplicationDbContext context) : base(context)
     {
     }
 }

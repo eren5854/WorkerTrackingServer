@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using WorkerTrackingServer.Domain.Workers;
+using WorkerTrackingServer.Domain.WorkerProductions;
 
 namespace WorkerTrackingServer.Infrastructure.Configurations;
 public sealed class WorkerProductionConfiguration : IEntityTypeConfiguration<WorkerProduction>

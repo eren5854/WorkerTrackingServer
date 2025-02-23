@@ -7,4 +7,4 @@ public sealed record UpdateEmailSettingCommand(
     string Email,
     string AppPassword,
     string SmtpDomainName,
-    int Port) : IRequest<Result<string>>;
+    int SmtpPort) : IRequest<Result<string>>;

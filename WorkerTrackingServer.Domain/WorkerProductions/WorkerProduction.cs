@@ -3,12 +3,9 @@ using WorkerTrackingServer.Domain.Abstracts;
 using WorkerTrackingServer.Domain.Products;
 using WorkerTrackingServer.Domain.Users;
 
-namespace WorkerTrackingServer.Domain.Workers;
+namespace WorkerTrackingServer.Domain.WorkerProductions;
 public sealed class WorkerProduction : Production
 {
-    //public Guid WorkerId { get; set; } = default!;
-    //public Worker Worker { get; set; } = default!;
-
     public object AppUserInfo => new
     {
         AppUserId = AppUserId,
@@ -31,4 +28,9 @@ public sealed class WorkerProduction : Production
     public Guid ProductId { get; set; } = default!;
     [JsonIgnore]
     public Product Product { get; set; } = default!;
+
+    public List<WorkerDailyProduction>? DailyProductions { get; set; }
+    public List<WorkerWeeklyProduction>? WeeklyProductions { get; set; }
+    public List<WorkerMonthlyProduction>? MonthlyProductions { get; set;}
+    public List<WorkerYearlyProduction>? WorkerYearlyProductions { get; set; }
 }

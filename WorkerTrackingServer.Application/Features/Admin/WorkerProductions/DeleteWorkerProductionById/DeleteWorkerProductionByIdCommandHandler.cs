@@ -2,7 +2,7 @@
 using ED.Result;
 using MediatR;
 using WorkerTrackingServer.Domain.Repositories;
-using WorkerTrackingServer.Domain.Workers;
+using WorkerTrackingServer.Domain.WorkerProductions;
 
 namespace WorkerTrackingServer.Application.Features.Admin.WorkerProductions.DeleteWorkerProductionById;
 internal sealed class DeleteWorkerProductionByIdCommandHandler(

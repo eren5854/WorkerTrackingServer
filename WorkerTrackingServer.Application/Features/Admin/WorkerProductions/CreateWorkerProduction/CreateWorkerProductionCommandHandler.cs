@@ -3,7 +3,7 @@ using ED.GenericRepository;
 using ED.Result;
 using MediatR;
 using WorkerTrackingServer.Domain.Repositories;
-using WorkerTrackingServer.Domain.Workers;
+using WorkerTrackingServer.Domain.WorkerProductions;
 
 namespace WorkerTrackingServer.Application.Features.Admin.WorkerProductions.CreateWorkerProduction;
 internal sealed class CreateWorkerProductionCommandHandler(

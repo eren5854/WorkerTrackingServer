@@ -2,6 +2,6 @@
 using WorkerTrackingServer.Domain.WorkerProductions;
 
 namespace WorkerTrackingServer.Domain.Repositories;
-public interface IWorkerProductionRepository : IRepository<WorkerProduction>
+public interface IWorkerYearlyProductionRepository : IRepository<WorkerYearlyProduction>
 {
 }

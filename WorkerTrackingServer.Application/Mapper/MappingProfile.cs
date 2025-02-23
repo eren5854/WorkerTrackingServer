@@ -22,7 +22,7 @@ using WorkerTrackingServer.Domain.Machines;
 using WorkerTrackingServer.Domain.Products;
 using WorkerTrackingServer.Domain.Users;
 using WorkerTrackingServer.Domain.WorkerAssignments;
-using WorkerTrackingServer.Domain.Workers;
+using WorkerTrackingServer.Domain.WorkerProductions;
 
 namespace WorkerTrackingServer.Application.Mapper;
 public sealed class MappingProfile : Profile

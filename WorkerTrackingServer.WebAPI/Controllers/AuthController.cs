@@ -23,8 +23,8 @@ public sealed class AuthController : ApiController
         return StatusCode(response.StatusCode, response);
     }
 
-    [Authorize(AuthenticationSchemes = "Bearer")]
-    [Authorize(Roles = "MasterAdmin")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
+    //[Authorize(Roles = "MasterAdmin")]
     [HttpPost]
     public async Task<IActionResult> RegisterAdmin(RegisterAdminCommand request, CancellationToken cancellationToken)
     {
@@ -32,8 +32,8 @@ public sealed class AuthController : ApiController
         return StatusCode(response.StatusCode, response);
     }
 
-    [Authorize(AuthenticationSchemes = "Bearer")]
-    [Authorize(Roles = "MasterAdmin,Admin, User")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
+    //[Authorize(Roles = "MasterAdmin,Admin, User")]
     [HttpPost]
     public async Task<IActionResult> ChangePassword(ChangePasswordCommand request, CancellationToken cancellationToken)
     {

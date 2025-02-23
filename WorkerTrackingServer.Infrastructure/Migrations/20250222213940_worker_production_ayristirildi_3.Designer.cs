@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkerTrackingServer.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using WorkerTrackingServer.Infrastructure.Context;
 namespace WorkerTrackingServer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250222213940_worker_production_ayristirildi_3")]
+    partial class worker_production_ayristirildi_3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,8 +102,8 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<int?>("DailyTarget")
                         .HasColumnType("int");
 
-                    b.Property<double?>("DailyYield")
-                        .HasColumnType("float");
+                    b.Property<int?>("DailyYield")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("DepartmentId")
                         .HasColumnType("uniqueidentifier");
@@ -117,8 +120,8 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<int?>("MonthlyTarget")
                         .HasColumnType("int");
 
-                    b.Property<double?>("MonthlyYield")
-                        .HasColumnType("float");
+                    b.Property<int?>("MonthlyYield")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
@@ -135,8 +138,8 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<int?>("WeeklyTarget")
                         .HasColumnType("int");
 
-                    b.Property<double?>("WeeklyYield")
-                        .HasColumnType("float");
+                    b.Property<int?>("WeeklyYield")
+                        .HasColumnType("int");
 
                     b.Property<int?>("YearlyActual")
                         .HasColumnType("int");
@@ -144,8 +147,8 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<int?>("YearlyTarget")
                         .HasColumnType("int");
 
-                    b.Property<double?>("YearlyYield")
-                        .HasColumnType("float");
+                    b.Property<int?>("YearlyYield")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -506,8 +509,8 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<int?>("DailyTarget")
                         .HasColumnType("int");
 
-                    b.Property<double?>("DailyYield")
-                        .HasColumnType("float");
+                    b.Property<int?>("DailyYield")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("DateEnd")
                         .HasColumnType("datetime2");
@@ -568,8 +571,8 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<int?>("MonthlyTarget")
                         .HasColumnType("int");
 
-                    b.Property<double?>("MonthlyYield")
-                        .HasColumnType("float");
+                    b.Property<int?>("MonthlyYield")
+                        .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -609,8 +612,8 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<int?>("DailyTarget")
                         .HasColumnType("int");
 
-                    b.Property<double?>("DailyYield")
-                        .HasColumnType("float");
+                    b.Property<int?>("DailyYield")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -624,8 +627,8 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<int?>("MonthlyTarget")
                         .HasColumnType("int");
 
-                    b.Property<double?>("MonthlyYield")
-                        .HasColumnType("float");
+                    b.Property<int?>("MonthlyYield")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
@@ -642,8 +645,8 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<int?>("WeeklyTarget")
                         .HasColumnType("int");
 
-                    b.Property<double?>("WeeklyYield")
-                        .HasColumnType("float");
+                    b.Property<int?>("WeeklyYield")
+                        .HasColumnType("int");
 
                     b.Property<int?>("YearlyActual")
                         .HasColumnType("int");
@@ -651,8 +654,8 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<int?>("YearlyTarget")
                         .HasColumnType("int");
 
-                    b.Property<double?>("YearlyYield")
-                        .HasColumnType("float");
+                    b.Property<int?>("YearlyYield")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -700,8 +703,8 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<int?>("WeeklyTarget")
                         .HasColumnType("int");
 
-                    b.Property<double?>("WeeklyYield")
-                        .HasColumnType("float");
+                    b.Property<int?>("WeeklyYield")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("WorkerProductionId")
                         .HasColumnType("uniqueidentifier");
@@ -753,8 +756,8 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<int?>("YearlyTarget")
                         .HasColumnType("int");
 
-                    b.Property<double?>("YearlyYield")
-                        .HasColumnType("float");
+                    b.Property<int?>("YearlyYield")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

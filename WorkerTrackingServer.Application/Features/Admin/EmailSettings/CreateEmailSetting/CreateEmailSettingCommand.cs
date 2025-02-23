@@ -6,4 +6,4 @@ public sealed record CreateEmailSettingCommand(
     string Email,
     string AppPassword,
     string SmtpDomainName,
-    int Port): IRequest<Result<string>>;
+    int SmtpPort): IRequest<Result<string>>;

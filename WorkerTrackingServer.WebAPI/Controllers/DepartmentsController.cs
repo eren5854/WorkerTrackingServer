@@ -9,8 +9,8 @@ using WorkerTrackingServer.WebAPI.Abstractions;
 
 namespace WorkerTrackingServer.WebAPI.Controllers;
 
-[Authorize(AuthenticationSchemes = "Bearer")]
-[Authorize(Roles = "MasterAdmin, Admin")]
+//[Authorize(AuthenticationSchemes = "Bearer")]
+//[Authorize(Roles = "MasterAdmin, Admin")]
 public sealed class DepartmentsController : ApiController
 {
     public DepartmentsController(IMediator mediator) : base(mediator)
