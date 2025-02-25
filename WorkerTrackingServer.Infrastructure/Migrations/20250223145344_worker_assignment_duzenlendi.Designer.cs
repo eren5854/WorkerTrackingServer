@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkerTrackingServer.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using WorkerTrackingServer.Infrastructure.Context;
 namespace WorkerTrackingServer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250223145344_worker_assignment_duzenlendi")]
+    partial class worker_assignment_duzenlendi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -472,11 +475,14 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
 
-                    b.HasIndex("MachineId");
+                    b.HasIndex("MachineId")
+                        .IsUnique();
 
-                    b.HasIndex("WorkerProductionId");
+                    b.HasIndex("WorkerProductionId")
+                        .IsUnique();
 
                     b.ToTable("WorkerAssignments");
                 });
@@ -650,9 +656,11 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("ProductId")
+                        .IsUnique();
 
                     b.ToTable("WorkerProductions");
                 });
@@ -883,20 +891,20 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
             modelBuilder.Entity("WorkerTrackingServer.Domain.WorkerAssignments.WorkerAssignment", b =>
                 {
                     b.HasOne("WorkerTrackingServer.Domain.Users.AppUser", "AppUser")
-                        .WithMany("WorkerAssignments")
-                        .HasForeignKey("AppUserId")
+                        .WithOne()
+                        .HasForeignKey("WorkerTrackingServer.Domain.WorkerAssignments.WorkerAssignment", "AppUserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("WorkerTrackingServer.Domain.Machines.Machine", "Machine")
-                        .WithMany("WorkerAssignments")
-                        .HasForeignKey("MachineId")
+                        .WithOne()
+                        .HasForeignKey("WorkerTrackingServer.Domain.WorkerAssignments.WorkerAssignment", "MachineId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("WorkerTrackingServer.Domain.WorkerProductions.WorkerProduction", "WorkerProduction")
-                        .WithMany("WorkerAssignments")
-                        .HasForeignKey("WorkerProductionId")
+                        .WithOne()
+                        .HasForeignKey("WorkerTrackingServer.Domain.WorkerAssignments.WorkerAssignment", "WorkerProductionId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -932,14 +940,14 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
             modelBuilder.Entity("WorkerTrackingServer.Domain.WorkerProductions.WorkerProduction", b =>
                 {
                     b.HasOne("WorkerTrackingServer.Domain.Users.AppUser", "AppUser")
-                        .WithMany("WorkerProductions")
-                        .HasForeignKey("AppUserId")
+                        .WithOne()
+                        .HasForeignKey("WorkerTrackingServer.Domain.WorkerProductions.WorkerProduction", "AppUserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("WorkerTrackingServer.Domain.Products.Product", "Product")
-                        .WithMany("WorkerProductions")
-                        .HasForeignKey("ProductId")
+                        .WithOne()
+                        .HasForeignKey("WorkerTrackingServer.Domain.WorkerProductions.WorkerProduction", "ProductId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
@@ -981,23 +989,6 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("WorkerTrackingServer.Domain.Machines.Machine", b =>
-                {
-                    b.Navigation("WorkerAssignments");
-                });
-
-            modelBuilder.Entity("WorkerTrackingServer.Domain.Products.Product", b =>
-                {
-                    b.Navigation("WorkerProductions");
-                });
-
-            modelBuilder.Entity("WorkerTrackingServer.Domain.Users.AppUser", b =>
-                {
-                    b.Navigation("WorkerAssignments");
-
-                    b.Navigation("WorkerProductions");
-                });
-
             modelBuilder.Entity("WorkerTrackingServer.Domain.WorkerProductions.WorkerProduction", b =>
                 {
                     b.Navigation("DailyProductions");
@@ -1005,8 +996,6 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Navigation("MonthlyProductions");
 
                     b.Navigation("WeeklyProductions");
-
-                    b.Navigation("WorkerAssignments");
 
                     b.Navigation("WorkerYearlyProductions");
                 });

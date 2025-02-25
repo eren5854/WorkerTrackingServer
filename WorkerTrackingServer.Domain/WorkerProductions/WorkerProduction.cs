@@ -2,6 +2,7 @@
 using WorkerTrackingServer.Domain.Abstracts;
 using WorkerTrackingServer.Domain.Products;
 using WorkerTrackingServer.Domain.Users;
+using WorkerTrackingServer.Domain.WorkerAssignments;
 
 namespace WorkerTrackingServer.Domain.WorkerProductions;
 public sealed class WorkerProduction : Production
@@ -33,4 +34,6 @@ public sealed class WorkerProduction : Production
     public List<WorkerWeeklyProduction>? WeeklyProductions { get; set; }
     public List<WorkerMonthlyProduction>? MonthlyProductions { get; set;}
     public List<WorkerYearlyProduction>? WorkerYearlyProductions { get; set; }
+
+    public List<WorkerAssignment>? WorkerAssignments { get; set; }
 }

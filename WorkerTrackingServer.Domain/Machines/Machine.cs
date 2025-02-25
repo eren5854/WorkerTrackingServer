@@ -1,4 +1,5 @@
 ﻿using WorkerTrackingServer.Domain.Abstract;
+using WorkerTrackingServer.Domain.WorkerAssignments;
 
 namespace WorkerTrackingServer.Domain.Machines;
 public sealed class Machine : Entity
@@ -12,4 +13,6 @@ public sealed class Machine : Entity
     public bool? MachineStatus { get; set; }
     public int MachineNumber { get; set; }
     public string? MachineDescription { get; set; }
+
+    public List<WorkerAssignment>? WorkerAssignments { get; set; }
 }

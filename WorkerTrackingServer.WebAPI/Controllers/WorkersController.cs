@@ -21,7 +21,7 @@ public sealed class WorkersController : ApiController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(WorkerRegisterCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromForm]WorkerRegisterCommand request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
         return StatusCode(response.StatusCode, response);

@@ -1,6 +1,7 @@
 ﻿using ED.GenericRepository;
 using ED.Result;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using WorkerTrackingServer.Domain.Repositories;
 using WorkerTrackingServer.Domain.WorkerAssignments;
 
@@ -15,6 +16,13 @@ internal sealed class UpdateStatusWorkerAssignmentCommandHandler(
         if (workerAssignment is null)
         {
             return Result<string>.Failure("Worker assignment not found");
+        }
+
+        WorkerAssignment? isAnyWorkerAssignmentStatusIsActive = await workerAssignmentRepository.GetAll().Where(a => a.AppUserId == workerAssignment.AppUserId && a.IsActive).FirstOrDefaultAsync(cancellationToken);
+        if (isAnyWorkerAssignmentStatusIsActive is not null)
+        {
+            isAnyWorkerAssignmentStatusIsActive.IsActive = false;
+            workerAssignmentRepository.Update(isAnyWorkerAssignmentStatusIsActive);
         }
 
         workerAssignment.IsActive = !workerAssignment.IsActive;

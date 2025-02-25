@@ -19,13 +19,13 @@ internal sealed class UpdateMachineCommandHandler(
             return Result<string>.Failure("Machine not found");
         }
 
-        bool isMachineNumberExists = await machineRepository.AnyAsync(a => a.MachineNumber == request.MachineNumber, cancellationToken);
+        bool isMachineNumberExists = await machineRepository.AnyAsync(a => a.MachineNumber == request.MachineNumber && a.Id != request.Id, cancellationToken);
         if (isMachineNumberExists)
         {
             return Result<string>.Failure("Machine Number already exists!");
         }
 
-        bool isMachineNameIsExists = await machineRepository.AnyAsync(a => a.MachineName == request.MachineName, cancellationToken);
+        bool isMachineNameIsExists = await machineRepository.AnyAsync(a => a.MachineName == request.MachineName && a.Id != request.Id, cancellationToken);
         if (isMachineNameIsExists)
         {
             return Result<string>.Failure("Machine Name already exists");

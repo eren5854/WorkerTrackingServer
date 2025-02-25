@@ -8,7 +8,18 @@ using WorkerTrackingServer.WebAPI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddCors();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder =>
+        {
+            builder.AllowAnyOrigin()
+                   .AllowAnyMethod()
+                   .AllowAnyHeader();
+        });
+});
+
+
 
 builder.Services.AddHangfire(config =>
 {
@@ -58,7 +69,8 @@ if (app.Environment.IsDevelopment())
     //app.MapOpenApi();
 }
 
-app.UseCors();
+app.UseCors("AllowAll");
+
 
 ExtensionsMiddleware.CreateAdmin(app);
 ExtensionsMiddleware.CreateMasterAdmin(app);

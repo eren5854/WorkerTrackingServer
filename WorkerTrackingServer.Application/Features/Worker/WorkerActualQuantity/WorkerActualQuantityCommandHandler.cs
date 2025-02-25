@@ -9,13 +9,16 @@ using WorkerTrackingServer.Domain.WorkerProductions;
 namespace WorkerTrackingServer.Application.Features.Worker.WorkerActualQuantity;
 internal sealed class WorkerActualQuantityCommandHandler(
     IWorkerAssignmentRepository workerAssignmentRepository,
-    IWorkerProductionRepository workerProductionRepository,
     IWorkerDailyProductionRepository workerDailyProductionRepository,
     IUnitOfWork unitOfWork) : IRequestHandler<WorkerActualQuantityCommand, Result<string>>
 {
     public async Task<Result<string>> Handle(WorkerActualQuantityCommand request, CancellationToken cancellationToken)
     {
-        WorkerAssignment? workerAssignment = await workerAssignmentRepository.Where(w => w.AppUserId == request.AppUserId).Include(i => i.AppUser).Include(i => i.Machine).Include(i => i.Product).FirstOrDefaultAsync(cancellationToken);
+        WorkerAssignment? workerAssignment = await workerAssignmentRepository
+            .Where(w => w.AppUserId == request.AppUserId)
+            .Include(i => i.AppUser)
+            .Include(i => i.Machine)
+            .Include(i => i.WorkerProduction).FirstOrDefaultAsync(cancellationToken);
         if (workerAssignment is null)
         {
             return Result<string>.Failure("Worker assignment not found because worker not found");
@@ -26,24 +29,20 @@ internal sealed class WorkerActualQuantityCommandHandler(
             return Result<string>.Failure("Worker is deactive");
         }
 
-        if (workerAssignment.EndTime is not null)
+        if (workerAssignment.EndTime > DateTime.Now)
         {
             return Result<string>.Failure("Mesai bitiş saati girildiği için değişiklik yapamazsınız. Lütfen yöneticinize başvurun");
         }
 
-        workerAssignment.ActualQuantity = request.ActualQuantity;
+        workerAssignment.WorkerProduction!.DailyActual = request.ActualQuantity;
         workerAssignment.EndTime = DateTime.Now;
         workerAssignment.UpdatedBy = workerAssignment.AppUser.FullName;
         workerAssignment.UpdatedDate = DateTime.Now;
+        workerAssignment.WorkerProduction.WeeklyActual += request.ActualQuantity;
+        workerAssignment.WorkerProduction.WeeklyYield = ((double)(workerAssignment.WorkerProduction.WeeklyActual!) / workerAssignment.WorkerProduction.WeeklyTarget) * 100;
         //workerAssignment.IsActive = false;
 
-        WorkerProduction workerProduction = await workerProductionRepository.GetByExpressionAsync(g => g.AppUserId == request.AppUserId && g.ProductId == workerAssignment.ProductId && g.IsActive, cancellationToken);
-        if (workerProduction is null)
-        {
-            return Result<string>.Failure("Worker production not found");
-        }
-
-        WorkerDailyProduction workerDailyProduction = await workerDailyProductionRepository.GetByExpressionAsync(g => g.WorkerProductionId == workerProduction.Id && g.IsActive, cancellationToken);
+        WorkerDailyProduction workerDailyProduction = await workerDailyProductionRepository.GetByExpressionAsync(g => g.WorkerProductionId == workerAssignment.WorkerProductionId && g.IsActive, cancellationToken);
         if (workerDailyProduction is null)
         {
             return Result<string>.Failure("Worker daily production not found");

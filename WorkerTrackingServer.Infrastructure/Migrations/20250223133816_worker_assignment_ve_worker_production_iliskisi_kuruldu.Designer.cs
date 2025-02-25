@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkerTrackingServer.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using WorkerTrackingServer.Infrastructure.Context;
 namespace WorkerTrackingServer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250223133816_worker_assignment_ve_worker_production_iliskisi_kuruldu")]
+    partial class worker_assignment_ve_worker_production_iliskisi_kuruldu
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -455,7 +458,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("MachineId")
+                    b.Property<Guid?>("MachineId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("StartTime")
@@ -467,7 +470,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("WorkerProductionId")
+                    b.Property<Guid?>("WorkerProductionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -883,22 +886,18 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
             modelBuilder.Entity("WorkerTrackingServer.Domain.WorkerAssignments.WorkerAssignment", b =>
                 {
                     b.HasOne("WorkerTrackingServer.Domain.Users.AppUser", "AppUser")
-                        .WithMany("WorkerAssignments")
+                        .WithMany()
                         .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("WorkerTrackingServer.Domain.Machines.Machine", "Machine")
-                        .WithMany("WorkerAssignments")
-                        .HasForeignKey("MachineId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("MachineId");
 
                     b.HasOne("WorkerTrackingServer.Domain.WorkerProductions.WorkerProduction", "WorkerProduction")
-                        .WithMany("WorkerAssignments")
-                        .HasForeignKey("WorkerProductionId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("WorkerProductionId");
 
                     b.Navigation("AppUser");
 
@@ -932,15 +931,15 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
             modelBuilder.Entity("WorkerTrackingServer.Domain.WorkerProductions.WorkerProduction", b =>
                 {
                     b.HasOne("WorkerTrackingServer.Domain.Users.AppUser", "AppUser")
-                        .WithMany("WorkerProductions")
+                        .WithMany()
                         .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("WorkerTrackingServer.Domain.Products.Product", "Product")
-                        .WithMany("WorkerProductions")
+                        .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AppUser");
@@ -981,23 +980,6 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Navigation("AppUser");
                 });
 
-            modelBuilder.Entity("WorkerTrackingServer.Domain.Machines.Machine", b =>
-                {
-                    b.Navigation("WorkerAssignments");
-                });
-
-            modelBuilder.Entity("WorkerTrackingServer.Domain.Products.Product", b =>
-                {
-                    b.Navigation("WorkerProductions");
-                });
-
-            modelBuilder.Entity("WorkerTrackingServer.Domain.Users.AppUser", b =>
-                {
-                    b.Navigation("WorkerAssignments");
-
-                    b.Navigation("WorkerProductions");
-                });
-
             modelBuilder.Entity("WorkerTrackingServer.Domain.WorkerProductions.WorkerProduction", b =>
                 {
                     b.Navigation("DailyProductions");
@@ -1005,8 +987,6 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.Navigation("MonthlyProductions");
 
                     b.Navigation("WeeklyProductions");
-
-                    b.Navigation("WorkerAssignments");
 
                     b.Navigation("WorkerYearlyProductions");
                 });

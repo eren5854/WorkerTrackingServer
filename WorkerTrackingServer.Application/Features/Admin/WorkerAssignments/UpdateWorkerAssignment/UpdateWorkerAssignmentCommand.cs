@@ -6,6 +6,5 @@ public sealed record UpdateWorkerAssignmentCommand(
     Guid Id,
     Guid AppUserId,
     Guid MachineId,
-    Guid ProductId,
-    int TargetQuantity,
+    Guid WorkerProductionId,
     DateTime StartTime) : IRequest<Result<string>>;

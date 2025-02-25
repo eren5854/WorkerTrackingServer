@@ -20,12 +20,12 @@ internal sealed class UpdateWorkerAssignmentCommandHandler(
             return Result<string>.Failure("Worker assignment not found");
         }
 
-        bool isWorkerAssignmentExistsToday = await workerAssignmentRepository.AnyAsync(a => a.StartTime.Date == request.StartTime.Date);
+        //bool isWorkerAssignmentExistsToday = await workerAssignmentRepository.AnyAsync(a => a.StartTime.Date == request.StartTime.Date);
 
-        if (isWorkerAssignmentExistsToday)
-        {
-            return Result<string>.Failure("Worker assigment already exists today");
-        }
+        //if (isWorkerAssignmentExistsToday)
+        //{
+        //    return Result<string>.Failure("Worker assigment already exists today");
+        //}
 
         mapper.Map(request, workerAssignment);
         workerAssignment.UpdatedDate = DateTime.Now;

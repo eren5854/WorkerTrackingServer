@@ -11,10 +11,10 @@ public class WorkerAssignmentBackgroundService(
 {
     public async Task WorkerAssignmentReset()
     {
-        List<WorkerAssignment> workerAssignments = await workerAssignmentRepository.GetAll().Where(w => w.IsActive).ToListAsync();
+        List<WorkerAssignment> workerAssignments = await workerAssignmentRepository.GetAll().Where(w => w.IsActive).Include(i => i.WorkerProduction).ToListAsync();
         foreach(var item in workerAssignments)
         {
-            item.ActualQuantity = null;
+            item.WorkerProduction.DailyActual = 0;
             item.EndTime = null;
             workerAssignmentRepository.Update(item);
         }

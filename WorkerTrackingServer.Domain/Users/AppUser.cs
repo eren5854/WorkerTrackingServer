@@ -2,6 +2,8 @@
 using System.Text.Json.Serialization;
 using WorkerTrackingServer.Domain.Departments;
 using WorkerTrackingServer.Domain.Enums;
+using WorkerTrackingServer.Domain.WorkerAssignments;
+using WorkerTrackingServer.Domain.WorkerProductions;
 
 namespace WorkerTrackingServer.Domain.Users;
 public sealed class AppUser : IdentityUser<Guid>
@@ -28,6 +30,9 @@ public sealed class AppUser : IdentityUser<Guid>
     public Guid? DepartmentId { get; set; }
     [JsonIgnore]
     public Department? Department { get; set; }
+
+    public List<WorkerAssignment>? WorkerAssignments { get; set; }
+    public List<WorkerProduction>? WorkerProductions { get; set; }
 
     public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpires { get; set; }

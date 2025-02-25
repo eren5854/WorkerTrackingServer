@@ -40,6 +40,37 @@ public sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRo
         //    .HasForeignKey(x => x.DepartmentId)
         //    .OnDelete(DeleteBehavior.Cascade);
 
+        builder.Entity<WorkerAssignment>()
+            .HasOne(x => x.WorkerProduction)
+            .WithMany(x => x.WorkerAssignments)
+            .HasForeignKey(x => x.WorkerProductionId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.Entity<WorkerAssignment>()
+            .HasOne(x => x.Machine)
+            .WithMany(x => x.WorkerAssignments)
+            .HasForeignKey(x => x.MachineId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.Entity<WorkerAssignment>()
+            .HasOne(x => x.AppUser)
+            .WithMany(x => x.WorkerAssignments) // WithOne yerine WithMany()
+            .HasForeignKey(x => x.AppUserId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+
+        builder.Entity<WorkerProduction>()
+            .HasOne(x => x.AppUser)
+            .WithMany(x => x.WorkerProductions)
+            .HasForeignKey(x => x.AppUserId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.Entity<WorkerProduction>()
+            .HasOne(x => x.Product)
+            .WithMany(x => x.WorkerProductions)
+            .HasForeignKey(x => x.ProductId)
+            .OnDelete(DeleteBehavior.NoAction);
+
         builder.Ignore<IdentityRoleClaim<Guid>>();
         builder.Ignore<IdentityUserClaim<Guid>>();
         builder.Ignore<IdentityUserLogin<Guid>>();

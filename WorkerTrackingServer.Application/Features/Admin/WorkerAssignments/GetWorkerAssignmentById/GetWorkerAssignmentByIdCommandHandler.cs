@@ -10,7 +10,7 @@ internal sealed class GetWorkerAssignmentByIdCommandHandler(
 {
     public async Task<Result<WorkerAssignment>> Handle(GetWorkerAssignmentByIdCommand request, CancellationToken cancellationToken)
     {
-        WorkerAssignment? workerAssignment = await workerAssignmentRepository.GetAll().Include(i => i.AppUser).Include(i => i.Machine).Include(i => i.Product).OrderByDescending(o => o.CreatedDate).FirstOrDefaultAsync(cancellationToken);
+        WorkerAssignment? workerAssignment = await workerAssignmentRepository.GetAll().Include(i => i.AppUser).Include(i => i.Machine).Include(i => i.WorkerProduction).OrderByDescending(o => o.CreatedDate).FirstOrDefaultAsync(cancellationToken);
         if (workerAssignment is null)
         {
             return Result<WorkerAssignment>.Failure("Worker assignment not found");

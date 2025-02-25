@@ -5,6 +5,5 @@ namespace WorkerTrackingServer.Application.Features.Admin.WorkerAssignments.Crea
 public sealed record CreateWorkerAssignmentCommand(
     Guid AppUserId,
     Guid MachineId,
-    Guid ProductId,
-    int TargetQuantity,
+    Guid WorkerProductionId,
     DateTime StartTime) : IRequest<Result<string>>;

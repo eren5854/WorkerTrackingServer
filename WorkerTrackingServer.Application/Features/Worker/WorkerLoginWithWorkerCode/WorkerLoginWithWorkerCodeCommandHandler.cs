@@ -11,7 +11,6 @@ namespace WorkerTrackingServer.Application.Features.Worker.WorkerLoginWithWorker
 internal sealed class WorkerLoginWithWorkerCodeCommandHandler(
     IAppUserRepository appUserRepository,
     IWorkerAssignmentRepository workerAssignmentRepository,
-    IWorkerProductionRepository workerProductionRepository,
     IWorkerDailyProductionRepository workerDailyProductionRepository,
     IUnitOfWork unitOfWork) : IRequestHandler<WorkerLoginWithWorkerCodeCommand, Result<WorkerAssignment>>
 {
@@ -23,7 +22,15 @@ internal sealed class WorkerLoginWithWorkerCodeCommandHandler(
             return Result<WorkerAssignment>.Failure("Worker not found");
         }
 
-        WorkerAssignment? workerAssignment = await workerAssignmentRepository.Where(w => w.AppUserId == appUser.Id && w.IsActive).Include(i => i.AppUser).Include(i => i.Machine).Include(i => i.Product).FirstOrDefaultAsync(cancellationToken);
+        WorkerAssignment? workerAssignment = await workerAssignmentRepository
+            .Where(w => w.AppUserId == appUser.Id && w.IsActive)
+            .Include(i => i.AppUser)
+            .Include(i => i.Machine)
+            .Include(i => i.WorkerProduction)
+                .ThenInclude(t => t.AppUser)
+            .Include(i => i.WorkerProduction)
+                .ThenInclude(t => t.Product)
+            .FirstOrDefaultAsync(cancellationToken);
         if (workerAssignment is null)
         {
             return Result<WorkerAssignment>.Failure("Worker Assignment not found");
@@ -34,19 +41,18 @@ internal sealed class WorkerLoginWithWorkerCodeCommandHandler(
             return Result<WorkerAssignment>.Failure("Bu gün için görev tanımlanmamış");
         }
 
-        WorkerProduction workerProduction = await workerProductionRepository.GetByExpressionAsync(g => g.AppUserId == appUser.Id && g.ProductId == workerAssignment.ProductId && g.IsActive, cancellationToken);
-        if (workerProduction is null)
+        if (workerAssignment.StartTime > DateTime.Now)
         {
-            return Result<WorkerAssignment>.Failure("Worker Production bulunamadı. lütfen yöneticinize başvurun");
+            return Result<WorkerAssignment>.Failure("Tanımlanmış görev mesai başlangıcında gözükecektir");
         }
 
-        bool isWorkerDailyProductionExists = await workerDailyProductionRepository.AnyAsync(a => a.DateStart.Date == DateTime.Now.Date, cancellationToken);
+        bool isWorkerDailyProductionExists = await workerDailyProductionRepository.AnyAsync(a => a.WorkerProductionId == workerAssignment.WorkerProductionId && a.DateStart.Date == DateTime.Now.Date, cancellationToken);
         if (!isWorkerDailyProductionExists)
         {
             WorkerDailyProduction workerDailyProduction = new()
             {
-                WorkerProductionId = workerProduction.Id,
-                DailyTarget = workerAssignment.TargetQuantity,
+                WorkerProductionId = workerAssignment.WorkerProductionId,
+                DailyTarget = workerAssignment.WorkerProduction?.DailyTarget,
                 DateStart = DateTime.Now,
                 CreatedDate = DateTime.Now,
                 CreatedBy = appUser.FullName,
@@ -55,6 +61,7 @@ internal sealed class WorkerLoginWithWorkerCodeCommandHandler(
             await workerDailyProductionRepository.AddAsync(workerDailyProduction, cancellationToken);
             await unitOfWork.SaveChangesAsync(cancellationToken);
         }
+
         return Result<WorkerAssignment>.Succeed(workerAssignment);
     }
 }
