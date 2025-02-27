@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WorkerTrackingServer.Application.Features.Admin.DepartmentProductions.CreateDepartmentProduction;
 using WorkerTrackingServer.Application.Features.Admin.DepartmentProductions.DeleteDepartmentProductionById;
 using WorkerTrackingServer.Application.Features.Admin.DepartmentProductions.GetAllDepartmentProduction;
+using WorkerTrackingServer.Application.Features.Admin.DepartmentProductions.GetAllDepartmentProductionByDepartmentId;
 using WorkerTrackingServer.Application.Features.Admin.DepartmentProductions.GetDepartmentProductionById;
 using WorkerTrackingServer.Application.Features.Admin.DepartmentProductions.UpdateDepartmentProduction;
 using WorkerTrackingServer.WebAPI.Abstractions;
@@ -26,6 +27,13 @@ public sealed class DepartmentProductionsController : ApiController
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetAllDepartmentProductionQuery(), cancellationToken);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllByDepartmentId(Guid Id, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetAllDepartmentProductionByDepartmentIdCommand(Id), cancellationToken);
         return StatusCode(response.StatusCode, response);
     }
 

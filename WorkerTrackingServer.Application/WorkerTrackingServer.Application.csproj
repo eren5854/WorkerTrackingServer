@@ -12,6 +12,7 @@
     <PackageReference Include="ED.Result" Version="8.0.0" />
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.0" />
+    <PackageReference Include="TS.FileService" Version="9.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ED.Result;
+using GenericFileService.Files;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,21 @@ internal sealed class WorkerRegisterCommandHandler(
             return Result<string>.Failure("Username already exists");
         }
 
+        string image = "";
+        var response = request.ProfilePicture;
+        if (response is null)
+        {
+            image = "";
+        }
+        if (response is not null)
+        {
+            image = FileService.FileSaveToServer(request.ProfilePicture!, "wwwroot/ProfilePictures/");
+        }
+
+        string password = "Password123*";
+
         AppUser appUser = mapper.Map<AppUser>(request);
+        appUser.ProfilePicture = image;
         appUser.CreatedBy = "Admin";
         appUser.CreatedDate = DateTime.Now;
         appUser.Email = $"{request.UserName}@gmail.com";
@@ -34,7 +49,7 @@ internal sealed class WorkerRegisterCommandHandler(
 
         appUser.WorkerCode = workerCode;
 
-        IdentityResult result = await userManager.CreateAsync(appUser, request.Password);
+        IdentityResult result = await userManager.CreateAsync(appUser, password);
         if (!result.Succeeded)
         {
             return Result<string>.Failure("Worker not created");

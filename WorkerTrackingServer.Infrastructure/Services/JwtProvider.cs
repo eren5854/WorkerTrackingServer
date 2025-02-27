@@ -20,6 +20,8 @@ internal class JwtProvider(
         {
             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.NameIdentifier, user.FullName),
+            new Claim(ClaimTypes.NameIdentifier, user.FirstName),
+            new Claim(ClaimTypes.NameIdentifier, user.LastName),
             //new Claim(ClaimTypes.NameIdentifier, user.Email ?? ""),
             new Claim(ClaimTypes.Email,  user.Email ?? ""),
             new Claim("UserName", user.UserName ?? ""),

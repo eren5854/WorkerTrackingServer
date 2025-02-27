@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using WorkerTrackingServer.Application.Features.Admin.Departments.CreateDepartment;
 using WorkerTrackingServer.Application.Features.Admin.Departments.DeleteDepartmentById;
 using WorkerTrackingServer.Application.Features.Admin.Departments.GetAllDepartment;
+using WorkerTrackingServer.Application.Features.Admin.Departments.GetDepartmentById;
 using WorkerTrackingServer.Application.Features.Admin.Departments.UpdateDepartment;
 using WorkerTrackingServer.WebAPI.Abstractions;
 
@@ -28,6 +29,13 @@ public sealed class DepartmentsController : ApiController
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetAllDepartmentQuery(), cancellationToken);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetById(Guid Id, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetDepartmentByIdCommand(Id), cancellationToken);
         return StatusCode(response.StatusCode, response);
     }
 

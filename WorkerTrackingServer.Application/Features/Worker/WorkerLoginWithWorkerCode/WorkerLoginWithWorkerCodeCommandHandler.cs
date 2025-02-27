@@ -36,10 +36,10 @@ internal sealed class WorkerLoginWithWorkerCodeCommandHandler(
             return Result<WorkerAssignment>.Failure("Worker Assignment not found");
         }
 
-        if(workerAssignment.StartTime.Date != DateTime.Now.Date)
-        {
-            return Result<WorkerAssignment>.Failure("Bu gün için görev tanımlanmamış");
-        }
+        //if (workerAssignment.StartTime.Date != DateTime.Now.Date)
+        //{
+        //    return Result<WorkerAssignment>.Failure("Bu gün için görev tanımlanmamış");
+        //}
 
         if (workerAssignment.StartTime > DateTime.Now)
         {

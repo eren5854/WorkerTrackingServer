@@ -71,6 +71,30 @@ public sealed class ApplicationDbContext : IdentityDbContext<AppUser, IdentityRo
             .HasForeignKey(x => x.ProductId)
             .OnDelete(DeleteBehavior.NoAction);
 
+        builder.Entity<WorkerDailyProduction>()
+            .HasOne(x => x.WorkerProduction)
+            .WithMany(x => x.DailyProductions)
+            .HasForeignKey(x => x.WorkerProductionId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.Entity<WorkerWeeklyProduction>()
+            .HasOne(x => x.WorkerProduction)
+            .WithMany(x => x.WeeklyProductions)
+            .HasForeignKey(x => x.WorkerProductionId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.Entity<WorkerMonthlyProduction>()
+            .HasOne(x => x.WorkerProduction)
+            .WithMany(x => x.MonthlyProductions)
+            .HasForeignKey(x => x.WorkerProductionId)
+            .OnDelete(DeleteBehavior.NoAction);
+
+        builder.Entity<WorkerYearlyProduction>()
+            .HasOne(x => x.WorkerProduction)
+            .WithMany(x => x.YearlyProductions)
+            .HasForeignKey(x => x.WorkerProductionId)
+            .OnDelete(DeleteBehavior.NoAction);
+
         builder.Ignore<IdentityRoleClaim<Guid>>();
         builder.Ignore<IdentityUserClaim<Guid>>();
         builder.Ignore<IdentityUserLogin<Guid>>();

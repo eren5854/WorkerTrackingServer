@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ED.GenericRepository;
 using ED.Result;
+using GenericFileService.Files;
 using MediatR;
 using WorkerTrackingServer.Domain.Repositories;
 using WorkerTrackingServer.Domain.Users;
@@ -19,10 +20,10 @@ internal sealed class UpdateWorkerCommandHandler(
             return Result<string>.Failure("Worker not found");
         }
 
-        if(appUser.Role == 1 || appUser.Role == 2)
-        {
-            return Result<string>.Failure("Unauthorized");
-        }
+        //if(appUser.Role == 1 || appUser.Role == 2)
+        //{
+        //    return Result<string>.Failure("Unauthorized");
+        //}
 
         if(appUser.UserName!.ToUpper() != request.UserName.ToUpper())
         {
@@ -34,7 +35,20 @@ internal sealed class UpdateWorkerCommandHandler(
 
         }
 
+        string image = "";
+        var response = request.ProfilePicture;
+        if (response is null)
+        {
+            image = appUser.ProfilePicture!;
+        }
+        if (response is not null)
+        {
+            image = FileService.FileSaveToServer(request.ProfilePicture!, "wwwroot/ProfilePictures/");
+            FileService.FileDeleteToServer("wwwroot/ProfilePictures/" + appUser.ProfilePicture);
+        }
+
         mapper.Map(request, appUser);
+        appUser.ProfilePicture = image;
         appUser.UpdatedBy = "Admin";
         appUser.UpdatedDate = DateTime.Now;
 

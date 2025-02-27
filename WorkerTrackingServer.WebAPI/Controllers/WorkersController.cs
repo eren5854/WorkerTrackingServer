@@ -42,7 +42,7 @@ public sealed class WorkersController : ApiController
     }
 
     [HttpPost]
-    public async Task<IActionResult> Update(UpdateWorkerCommand request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Update([FromForm]UpdateWorkerCommand request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
         return StatusCode(response.StatusCode, response);

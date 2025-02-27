@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkerTrackingServer.Infrastructure.Context;
 
@@ -11,9 +12,11 @@ using WorkerTrackingServer.Infrastructure.Context;
 namespace WorkerTrackingServer.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250226155110_dailyproductions")]
+    partial class dailyproductions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -923,7 +926,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.HasOne("WorkerTrackingServer.Domain.WorkerProductions.WorkerProduction", "WorkerProduction")
                         .WithMany("MonthlyProductions")
                         .HasForeignKey("WorkerProductionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("WorkerProduction");
@@ -953,7 +956,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
                     b.HasOne("WorkerTrackingServer.Domain.WorkerProductions.WorkerProduction", "WorkerProduction")
                         .WithMany("WeeklyProductions")
                         .HasForeignKey("WorkerProductionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("WorkerProduction");
@@ -962,9 +965,9 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
             modelBuilder.Entity("WorkerTrackingServer.Domain.WorkerProductions.WorkerYearlyProduction", b =>
                 {
                     b.HasOne("WorkerTrackingServer.Domain.WorkerProductions.WorkerProduction", "WorkerProduction")
-                        .WithMany("YearlyProductions")
+                        .WithMany("WorkerYearlyProductions")
                         .HasForeignKey("WorkerProductionId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("WorkerProduction");
@@ -1008,7 +1011,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.Navigation("WorkerAssignments");
 
-                    b.Navigation("YearlyProductions");
+                    b.Navigation("WorkerYearlyProductions");
                 });
 #pragma warning restore 612, 618
         }

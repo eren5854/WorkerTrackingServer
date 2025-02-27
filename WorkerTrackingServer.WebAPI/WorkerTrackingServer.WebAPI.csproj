@@ -23,4 +23,8 @@
     <ProjectReference Include="..\WorkerTrackingServer.Infrastructure\WorkerTrackingServer.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\ProfilePictures\" />
+  </ItemGroup>
+
 </Project>

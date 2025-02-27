@@ -2,6 +2,7 @@ using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
 using WorkerTrackingServer.Application;
+using WorkerTrackingServer.Application.Services;
 using WorkerTrackingServer.Infrastructure;
 using WorkerTrackingServer.WebAPI.BackgroundServices;
 using WorkerTrackingServer.WebAPI.Middlewares;
@@ -77,7 +78,7 @@ ExtensionsMiddleware.CreateMasterAdmin(app);
 
 app.UseHangfireDashboard();
 
-//RecurringJob.AddOrUpdate<WorkerProductionBackgroundService>(x => x.WorkerProductionWeekly(), Cron.Daily());
+RecurringJob.AddOrUpdate<WorkerProductionBackgroundService>(x => x.WorkerProductionWeekly(), Cron.Daily());
 
 // Her gün 00:00 - 00:59 arasýnda her 10 dakikada bir çalýþtýr
 for (int i = 0; i < 6; i++)
@@ -94,6 +95,8 @@ if (DateTime.Now.Hour == 0)
 {
     BackgroundJob.Enqueue<WorkerAssignmentBackgroundService>(x => x.WorkerAssignmentReset());
 }
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 

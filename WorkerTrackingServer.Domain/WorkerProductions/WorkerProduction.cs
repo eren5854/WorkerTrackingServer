@@ -33,7 +33,7 @@ public sealed class WorkerProduction : Production
     public List<WorkerDailyProduction>? DailyProductions { get; set; }
     public List<WorkerWeeklyProduction>? WeeklyProductions { get; set; }
     public List<WorkerMonthlyProduction>? MonthlyProductions { get; set;}
-    public List<WorkerYearlyProduction>? WorkerYearlyProductions { get; set; }
+    public List<WorkerYearlyProduction>? YearlyProductions { get; set; }
 
     public List<WorkerAssignment>? WorkerAssignments { get; set; }
 }

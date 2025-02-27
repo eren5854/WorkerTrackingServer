@@ -8,7 +8,7 @@ public sealed record WorkerRegisterCommand(
     string FirstName,
     string LastName,
     string UserName,
-    string Password,
+    string? Password,
     IFormFile? ProfilePicture,
     DateOnly? DateOfBirth,
     GenderSmartEnum? Gender,
