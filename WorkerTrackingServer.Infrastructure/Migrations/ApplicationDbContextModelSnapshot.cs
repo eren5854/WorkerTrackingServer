@@ -39,7 +39,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("Roles", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.Departments.Department", b =>
@@ -77,7 +77,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Departments");
+                    b.ToTable("Departments", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.Departments.DepartmentProduction", b =>
@@ -200,7 +200,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EmailSettings");
+                    b.ToTable("EmailSettings", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.Machines.Machine", b =>
@@ -265,7 +265,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Machines");
+                    b.ToTable("Machines", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.Products.Product", b =>
@@ -309,7 +309,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.Users.AppUser", b =>
@@ -427,7 +427,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.WorkerAssignments.WorkerAssignment", b =>
@@ -478,7 +478,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasIndex("WorkerProductionId");
 
-                    b.ToTable("WorkerAssignments");
+                    b.ToTable("WorkerAssignments", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.WorkerProductions.WorkerDailyProduction", b =>
@@ -528,7 +528,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasIndex("WorkerProductionId");
 
-                    b.ToTable("WorkerDailyProductions");
+                    b.ToTable("WorkerDailyProductions", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.WorkerProductions.WorkerMonthlyProduction", b =>
@@ -578,7 +578,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasIndex("WorkerProductionId");
 
-                    b.ToTable("WorkerMonthlyProductions");
+                    b.ToTable("WorkerMonthlyProductions", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.WorkerProductions.WorkerProduction", b =>
@@ -654,7 +654,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("WorkerProductions");
+                    b.ToTable("WorkerProductions", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.WorkerProductions.WorkerWeeklyProduction", b =>
@@ -704,7 +704,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasIndex("WorkerProductionId");
 
-                    b.ToTable("WorkerWeeklyProductions");
+                    b.ToTable("WorkerWeeklyProductions", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.WorkerProductions.WorkerYearlyProduction", b =>
@@ -754,7 +754,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasIndex("WorkerProductionId");
 
-                    b.ToTable("WorkerYearlyProductions");
+                    b.ToTable("WorkerYearlyProductions", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.Workers.Worker", b =>
@@ -808,7 +808,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Workers");
+                    b.ToTable("Workers", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.Workers.WorkerLogin", b =>
@@ -849,7 +849,7 @@ namespace WorkerTrackingServer.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("WorkerLogins");
+                    b.ToTable("WorkerLogins", (string)null);
                 });
 
             modelBuilder.Entity("WorkerTrackingServer.Domain.Departments.DepartmentProduction", b =>

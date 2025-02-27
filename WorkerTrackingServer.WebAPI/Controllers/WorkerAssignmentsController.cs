@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WorkerTrackingServer.Application.Features.Admin.WorkerAssignments.CreateWorkerAssignment;
 using WorkerTrackingServer.Application.Features.Admin.WorkerAssignments.DeleteWorkerAssignmentById;
 using WorkerTrackingServer.Application.Features.Admin.WorkerAssignments.GetAllWorkerAssignment;
+using WorkerTrackingServer.Application.Features.Admin.WorkerAssignments.GetAllWorkerAssignmentByAppUserId;
 using WorkerTrackingServer.Application.Features.Admin.WorkerAssignments.GetWorkerAssignmentById;
 using WorkerTrackingServer.Application.Features.Admin.WorkerAssignments.UpdateStatusWorkerAssignment;
 using WorkerTrackingServer.Application.Features.Admin.WorkerAssignments.UpdateWorkerAssignment;
@@ -27,6 +28,13 @@ public sealed class WorkerAssignmentsController : ApiController
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetAllWorkerAssignmentQuery(), cancellationToken);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllByAppUserId(Guid AppUserId, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetAllWorkerAssignmentByAppUserIdCommand(AppUserId), cancellationToken);
         return StatusCode(response.StatusCode, response);
     }
 

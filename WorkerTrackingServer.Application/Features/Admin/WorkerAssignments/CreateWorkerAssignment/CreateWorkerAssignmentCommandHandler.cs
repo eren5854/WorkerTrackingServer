@@ -2,7 +2,6 @@
 using ED.GenericRepository;
 using ED.Result;
 using MediatR;
-using WorkerTrackingServer.Application.Features.Admin.WorkerAssignments.UpdateWorkerAssignment;
 using WorkerTrackingServer.Domain.Repositories;
 using WorkerTrackingServer.Domain.WorkerAssignments;
 

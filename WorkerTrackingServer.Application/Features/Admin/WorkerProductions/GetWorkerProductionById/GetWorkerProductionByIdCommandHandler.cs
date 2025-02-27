@@ -12,6 +12,8 @@ internal sealed class GetWorkerProductionByIdCommandHandler(
 {
     public async Task<Result<WorkerProduction>> Handle(GetWorkerProductionByIdCommand request, CancellationToken cancellationToken)
     {
+        await productionCalculateService.ProductionCalculateByWorkerProductionId(request.Id, cancellationToken);
+
         WorkerProduction? workerProduction = await workerProductionRepository
             .Where(w => w.Id == request.Id)
             .Include(i => i.AppUser)
@@ -25,8 +27,10 @@ internal sealed class GetWorkerProductionByIdCommandHandler(
         {
             return Result<WorkerProduction>.Failure("Worker production not found");
         }
-    
-        await productionCalculateService.WeeklyProductionCalculateByWorkerProductionId(workerProduction.Id, cancellationToken);
+
+        //await productionCalculateService.WeeklyProductionCalculateByWorkerProductionId(workerProduction.Id, cancellationToken);
+        //await productionCalculateService.MonthlyProductionCalculateByWorkerProductionId(workerProduction.Id, cancellationToken);
+
 
         return Result<WorkerProduction>.Succeed(workerProduction);
     }

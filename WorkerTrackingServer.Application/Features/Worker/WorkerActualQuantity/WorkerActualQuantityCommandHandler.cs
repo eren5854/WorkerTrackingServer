@@ -31,7 +31,7 @@ internal sealed class WorkerActualQuantityCommandHandler(
             return Result<string>.Failure("Worker is deactive");
         }
 
-        if (workerAssignment.EndTime > DateTime.Now)
+        if (workerAssignment.EndTime < DateTime.Now)
         {
             return Result<string>.Failure("Mesai bitiş saati girildiği için değişiklik yapamazsınız. Lütfen yöneticinize başvurun");
         }

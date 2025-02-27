@@ -12,22 +12,38 @@ internal sealed class UpdateStatusWorkerAssignmentCommandHandler(
 {
     public async Task<Result<string>> Handle(UpdateStatusWorkerAssignmentCommand request, CancellationToken cancellationToken)
     {
-        WorkerAssignment workerAssignment = await workerAssignmentRepository.GetByExpressionAsync(g => g.Id == request.Id, cancellationToken);
+        WorkerAssignment workerAssignment = await workerAssignmentRepository
+            .GetByExpressionAsync(g => g.Id == request.Id, cancellationToken);
+
         if (workerAssignment is null)
         {
             return Result<string>.Failure("Worker assignment not found");
         }
 
-        WorkerAssignment? isAnyWorkerAssignmentStatusIsActive = await workerAssignmentRepository.GetAll().Where(a => a.AppUserId == workerAssignment.AppUserId && a.IsActive).FirstOrDefaultAsync(cancellationToken);
-        if (isAnyWorkerAssignmentStatusIsActive is not null)
+        // Kullanıcının aktif başka bir ataması var mı?
+        WorkerAssignment? activeWorkerAssignment = await workerAssignmentRepository
+            .GetAll()
+            .Where(a => a.Id != workerAssignment.Id && a.AppUserId == workerAssignment.AppUserId && a.IsActive)
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (activeWorkerAssignment is not null)
         {
-            isAnyWorkerAssignmentStatusIsActive.IsActive = false;
-            workerAssignmentRepository.Update(isAnyWorkerAssignmentStatusIsActive);
+            // Önce diğer aktif olanı pasif yap
+            activeWorkerAssignment.IsActive = false;
+            workerAssignmentRepository.Update(activeWorkerAssignment);
+
+            // Sonra mevcut olanı aktif yap
+            workerAssignment.IsActive = true;
+        }
+        else
+        {
+            // Eğer başka aktif kayıt yoksa mevcut olan pasif kalmalı
+            workerAssignment.IsActive = !workerAssignment.IsActive;
         }
 
-        workerAssignment.IsActive = !workerAssignment.IsActive;
         workerAssignmentRepository.Update(workerAssignment);
         await unitOfWork.SaveChangesAsync(cancellationToken);
-        return Result<string>.Succeed("Worker assignment status update");
+
+        return Result<string>.Succeed("Worker assignment status updated successfully.");
     }
 }

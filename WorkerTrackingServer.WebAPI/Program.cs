@@ -78,7 +78,7 @@ ExtensionsMiddleware.CreateMasterAdmin(app);
 
 app.UseHangfireDashboard();
 
-RecurringJob.AddOrUpdate<WorkerProductionBackgroundService>(x => x.WorkerProductionWeekly(), Cron.Daily());
+RecurringJob.AddOrUpdate<WorkerProductionBackgroundService>(x => x.WorkerProductionWeekly(CancellationToken.None), Cron.Daily());
 
 // Her gün 00:00 - 00:59 arasýnda her 10 dakikada bir çalýþtýr
 for (int i = 0; i < 6; i++)
