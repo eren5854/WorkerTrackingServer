@@ -11,13 +11,14 @@ public sealed class WorkerAssignment : Entity
     public object UserInfo => new
     {
         AppUserId = AppUserId,
-        FullName = AppUser.FullName,
+        FullName = AppUser!.FullName,
+        ProfilePicture = AppUser.ProfilePicture,
         IsActive = AppUser.IsActive,
     };
     [JsonIgnore]
-    public Guid AppUserId { get; set; } = default!;
+    public Guid AppUserId { get; set; }
     [JsonIgnore]
-    public AppUser AppUser { get; set; } = default!;
+    public AppUser? AppUser { get; set; }
 
     public object? MachineInfo => new
     {

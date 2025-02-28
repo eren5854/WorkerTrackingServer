@@ -343,7 +343,6 @@ internal sealed class ProductionCalculateService(
         DateTime startOfWeek = today.AddDays(-daysSinceMonday);  // Pazartesi
         DateTime endOfWeek = startOfWeek.AddDays(6);  // Pazar
 
-        // Pasif olan işçi üretimlerini getir
         List<WorkerProduction> workerProductions = await workerProductionRepository
             .GetAll()
             .Where(w => w.IsActive)
@@ -555,7 +554,7 @@ internal sealed class ProductionCalculateService(
         return Result<string>.Succeed("Yıllık üretim hesaplaması tamamlandı.");
     }
 
-    public Task<Result<string>> YearlyProductionCalculateByWorkerProductionId(Guid Id, CancellationToken cancellationToken)
+    public async Task<Result<string>> YearlyProductionCalculateByWorkerProductionId(Guid Id, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
