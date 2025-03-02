@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using WorkerTrackingServer.Application.Features.Admin.Products.CreateProduct;
 using WorkerTrackingServer.Application.Features.Admin.Products.DeleteProductById;
 using WorkerTrackingServer.Application.Features.Admin.Products.GetAllProduct;
+using WorkerTrackingServer.Application.Features.Admin.Products.GetAllProductCount;
 using WorkerTrackingServer.Application.Features.Admin.Products.GetProductById;
 using WorkerTrackingServer.Application.Features.Admin.Products.UpdateProduct;
 using WorkerTrackingServer.Application.Features.Admin.Products.UpdateProductStatus;
@@ -27,6 +28,13 @@ public sealed class ProductsController : ApiController
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetAllProductQuery(), cancellationToken);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllCount(CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetAllProductCountQuery(), cancellationToken);
         return StatusCode(response.StatusCode, response);
     }
 

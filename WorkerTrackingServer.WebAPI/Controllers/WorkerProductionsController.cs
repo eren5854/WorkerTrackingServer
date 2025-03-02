@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using WorkerTrackingServer.Application.Features.Admin.WorkerProductions.CreateWorkerProduction;
 using WorkerTrackingServer.Application.Features.Admin.WorkerProductions.DeleteWorkerProductionById;
+using WorkerTrackingServer.Application.Features.Admin.WorkerProductions.GetAllWorkerProduction;
 using WorkerTrackingServer.Application.Features.Admin.WorkerProductions.GetAllWorkerProductionByAppUserId;
 using WorkerTrackingServer.Application.Features.Admin.WorkerProductions.GetWorkerProductionById;
 using WorkerTrackingServer.Application.Features.Admin.WorkerProductions.UpdateWorkerProduction;
@@ -19,6 +20,13 @@ public sealed class WorkerProductionsController : ApiController
     public async Task<IActionResult> Create(CreateWorkerProductionCommand request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(request, cancellationToken);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetAllWorkerProductionQuery(), cancellationToken);
         return StatusCode(response.StatusCode, response);
     }
 

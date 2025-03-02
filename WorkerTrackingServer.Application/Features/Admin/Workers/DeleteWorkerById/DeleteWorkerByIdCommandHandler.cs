@@ -3,10 +3,14 @@ using ED.Result;
 using MediatR;
 using WorkerTrackingServer.Domain.Repositories;
 using WorkerTrackingServer.Domain.Users;
+using WorkerTrackingServer.Domain.WorkerAssignments;
+using WorkerTrackingServer.Domain.WorkerProductions;
 
 namespace WorkerTrackingServer.Application.Features.Admin.Workers.DeleteWorkerById;
 internal sealed class DeleteWorkerByIdCommandHandler(
     IAppUserRepository appUserRepository,
+    IWorkerAssignmentRepository workerAssignmentRepository,
+    IWorkerProductionRepository workerProductionRepository,
     IUnitOfWork unitOfWork) : IRequestHandler<DeleteWorkerByIdCommand, Result<string>>
 {
     public async Task<Result<string>> Handle(DeleteWorkerByIdCommand request, CancellationToken cancellationToken)
@@ -20,6 +24,20 @@ internal sealed class DeleteWorkerByIdCommandHandler(
         if (appUser.Role == 1 || appUser.Role == 2)
         {
             return Result<string>.Failure("Unauthorized");
+        }
+
+        WorkerProduction workerProduction = await workerProductionRepository.GetByExpressionAsync(g => g.AppUserId == request.Id, cancellationToken);
+        if (workerProduction is not null)
+        {
+            workerProduction.IsDeleted = true;
+            workerProductionRepository.Update(workerProduction);
+        }
+
+        WorkerAssignment workerAssignment = await workerAssignmentRepository.GetByExpressionAsync(g => g.AppUserId == request.Id, cancellationToken);
+        if (workerAssignment is not null)
+        {
+            workerAssignment.IsDeleted = true;
+            workerAssignmentRepository.Update(workerAssignment);
         }
 
         appUser.IsDeleted = true;

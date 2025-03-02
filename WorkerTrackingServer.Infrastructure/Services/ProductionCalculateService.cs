@@ -175,7 +175,7 @@ internal sealed class ProductionCalculateService(
         if (daysSinceMonday < 0) daysSinceMonday += 7;
         
         DateTime startOfWeek = today.AddDays(-daysSinceMonday);
-        DateTime endOfWeek = startOfWeek.AddDays(6);
+        DateTime endOfWeek = startOfWeek.AddDays(7);
 
         DateTime startOfMonth = new DateTime(today.Year, today.Month, 1);
         DateTime endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);

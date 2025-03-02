@@ -5,6 +5,7 @@ using WorkerTrackingServer.Application.Features.Admin.Workers.DeleteWorkerById;
 using WorkerTrackingServer.Application.Features.Admin.Workers.GetAllWorker;
 using WorkerTrackingServer.Application.Features.Admin.Workers.GetWorkerById;
 using WorkerTrackingServer.Application.Features.Admin.Workers.UpdateWorker;
+using WorkerTrackingServer.Application.Features.Admin.Workers.UpdateWorkerCode;
 using WorkerTrackingServer.Application.Features.Admin.Workers.UpdateWorkerStatus;
 using WorkerTrackingServer.Application.Features.Admin.Workers.WorkerRegister;
 using WorkerTrackingServer.WebAPI.Abstractions;
@@ -52,6 +53,13 @@ public sealed class WorkersController : ApiController
     public async Task<IActionResult> UpdateStatus(Guid Id, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new UpdateWorkerStatusCommand(Id), cancellationToken);
+        return StatusCode(response.StatusCode, response);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> UpdateCode(Guid Id, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new UpdateWorkerCodeCommand(Id), cancellationToken);
         return StatusCode(response.StatusCode, response);
     }
 
